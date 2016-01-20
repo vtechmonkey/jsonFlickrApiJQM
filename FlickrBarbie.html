@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!--
+    Author: Sarah O'Connor
+    Assignment: WI2.0 Mobile Development, Digital Skills Academy
+    Student ID: D13126148
+    Date: 2015 Mar 1 -->
+    <!--this version returns images with the tag barbie from the Flickr api  -->
+
+    <title>Flickr Jquery Mobile</title><!--title of project-->
+    <meta charset="utf-8"><!--character encoding-->
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!--viewport meta tag-->
+        
+          <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+          <link rel="stylesheet" href="themes/omg.min.css" /><!--themeroller custom theme-->
+          <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" /><!--minified jquery mobile icons-->
+          <link rel="stylesheet" href="jquery.mobile.structure-1.4.5.min.css" /><!--minified jquery mobile css for custom theme-->
+          
+
+       
+          <script type="text/javascript" src="jquery-1.11.2.min.js"></script><!--minified js for jquery -->
+          <script type="text/javascript" src="jquery.mobile-1.4.5.min.js"></script><!--minified js for jquery mobile -->
+
+</head><!--close header -->
+<body><!-- body tag-->
+
+  <div id="myPages"><!--open div that will contain json image pages -->
+          <div data-role="page" id="page1"><!--open div that will contain the home page and list items -->
+              <div data-role="header"><!--open header -->
+                 <h1>This app searches flickr for images with the tag barbie</h1>
+                 <h2>Filter the results below or type 'barbie' to see all results</h2><!--header title-->
+              </div><!--close header -->
+          
+          
+              <div data-role="content"><!--open content div -->
+                 
+                  <div class="content-primary"><!--open primary content div -->
+                    <div data-demo-html="true">
+                      <ul id="myList" data-inset="true" data-role="listview" data-filter="true" data-autodividers="true" data-filter-placeholder="barbie" data-filter-reveal="true"><!--open ul, #myList,  with inset style, data-role 'listview', add a filter, add alpabetic autodividers, placeholder hint barbie,  hide data not filtered-->
+                            
+                      </ul><!--close ul -->
+                    </div><!--close data-demo-html-->
+                  </div><!--close primary content div -->
+              </div><!--close content div -->
+              <div data-role="footer"><!--open footer div -->
+                
+                
+                <h1>so pink it hurts</h1><!--footer h1 -->
+              </div><!--close footer div -->
+          </div><!--close home page -->
+      </div><!--close image page div -->
+
+   
+          <style type="text/css"> /* only one line of css so no separate file - in body - loads faster*/
+          #imgDiv { text-align:center;}
+          </style>
+
+          <script type="text/javascript"> //script in body for ajax requests
+
+                 (function(){ //padding json request 
+                  var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?"; //call back request for json data set as variable 'flickerAPI'
+                  $.getJSON( flickerAPI, { //get json from flicker api 
+                    tags: "barbie", // with the tag 'barbie'
+                    tagmode: "any", // any tagmode
+                    format: "json" // in json format
+                  })         
+                    .done(function(data){      //method chaining   
+                                      
+                    $.each(data.items, function(i,item) { //start looping through data from json file
+                        
+                           $("#myList").append('<li class="ui-screen-hidden"><a href="#image'//get div with id #mylist and add list items for each image in json 
+                            + item.date_taken+ //name value from json
+                            '"  data-transition="flip" data-role="button" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' // make each list item a button and add data transition flip, icon right carat 
+                             + item.tags + //get name value from json
+                             '</a></li>'); //close link and  list item
+
+                           
+                           $("#myPages").append('<div data-role="page" id="image' // add pages for each image from json 
+                            + item.date_taken + //name value from json
+                             '"><div data-role="header"><h1>' // add a header for each page 
+                              + item.title + // use name value for header 
+                              '</h1></div><div data-role="content" id="imgDiv"> <img src="' // close header and start content div and imgage tag 
+                               + item.media.m + //get image value from json
+                               '"/></div><div data-role="footer"><h1><a href="#page1" " data-role="button" data-icon="home" data-iconpos="top">Home</a></h1></div></div>'); //close div, add footer, add link back to home page, make link a button with a home icon, position icon over text, close divs
+                           if (i === 10) {  
+                            return false;
+                           } // if more than 7 results stop 
+                           
+                    });//close loop function
+
+
+                });// close get json function 
+             
+            })();
+
+          </script><!-- close script for getting json -->
+
+
+   
+      
+      
+
+   
+</body><!--close body -->
+</html><!--close html -->

@@ -1,0 +1,2 @@
+localJson.html loads images from the hard coded barbie.json file so needs xampp to run. 
+Flickerbarbie.html searches for images on Flicker with the tag 'barbie'. 
