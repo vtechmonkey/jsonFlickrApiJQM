@@ -17,10 +17,18 @@
           <link rel="stylesheet" href="themes/omg.min.css" /><!--themeroller custom theme-->
           <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" /><!--minified jquery mobile icons-->
           <link rel="stylesheet" href="jquery.mobile.structure-1.4.5.min.css" /><!--minified jquery mobile css for custom theme-->
-          
+ 
 
        
           <script type="text/javascript" src="jquery-1.11.2.min.js"></script><!--minified js for jquery -->
+          <!-- http://stackoverflow.com/questions/32453806/uncaught-securityerror-failed-to-execute-replacestate-on-history-cannot-be -->
+          <script>
+              $(document).bind('mobileinit',function(){
+                  $.mobile.changePage.defaults.changeHash = false;
+                  $.mobile.hashListeningEnabled = false;
+                  $.mobile.pushStateEnabled = false;
+              });
+          </script> 
           <script type="text/javascript" src="jquery.mobile-1.4.5.min.js"></script><!--minified js for jquery mobile -->
 
 </head><!--close header -->
